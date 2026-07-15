@@ -2241,6 +2241,67 @@ st.markdown(
     @media (max-width: 1400px) {
         .pa-triple-layout { grid-template-columns: 1fr; }
     }
+    .pa-data-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        min-width: 0;
+    }
+    .pa-data-group-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8fa3bf;
+        margin: 0.35rem 0 0.1rem 0;
+        padding-left: 0.1rem;
+    }
+    .pa-data-section {
+        background: linear-gradient(160deg, #151b2b 0%, #101522 100%);
+        border: 1px solid #2a3550;
+        border-radius: 10px;
+        padding: 0.75rem 0.85rem;
+    }
+    .pa-data-section-title {
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #93c5fd;
+        margin-bottom: 0.55rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid #2a3550;
+    }
+    .pa-data-section-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+    .data-metric-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.65rem;
+        font-size: 0.84rem;
+        line-height: 1.35;
+    }
+    .data-metric-label {
+        color: #94a3b8;
+        min-width: 0;
+        flex: 1;
+    }
+    .data-metric-val {
+        color: #f1f5f9;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+        flex-shrink: 0;
+    }
+    .pa-data-identity .pa-archetype-row,
+    .pa-data-identity .pa-identity-badges,
+    .pa-data-identity .pa-identity-chip {
+        display: none !important;
+    }
     @media (max-width: 1100px) {
         .pa-layout { grid-template-columns: 1fr; }
         .pa-col { display: flex; flex-direction: column; }
@@ -5081,6 +5142,178 @@ def render_maps_section(
     st.markdown("</div>", unsafe_allow_html=True)
 
 
+SPAIN_PARTICIPATION_KEYS: tuple[str, ...] = (
+    "minutes",
+    "passes_completed",
+    "passes_total",
+    "carries_total",
+    "impact_passes",
+    "high_impact_passes",
+    "carry_impact_passes",
+    "carry_high_impact_passes",
+    "dribbles_total",
+    "key_passes",
+    "progressive_passes",
+    "passes_to_box",
+)
+
+
+def _data_metric_line_html(
+    key: str,
+    value: str,
+    *,
+    label_fn=pg_analyst_metric_label,
+    tooltip_fn=pg_metric_tooltip,
+) -> str:
+    label_html = _metric_label_html(key, label_fn=label_fn, tooltip_fn=tooltip_fn)
+    return (
+        '<div class="data-metric-line">'
+        f'<span class="data-metric-label">{label_html}</span>'
+        f'<span class="data-metric-val">{html.escape(value)}</span>'
+        "</div>"
+    )
+
+
+def _data_metrics_section_html(
+    player: dict,
+    title: str,
+    keys: tuple[str, ...],
+    *,
+    label_fn=pg_analyst_metric_label,
+    tooltip_fn=pg_metric_tooltip,
+    fmt_pct_fn=pg_fmt_pct,
+    fmt_stat_fn=pg_fmt_stat_value,
+) -> str:
+    lines = [
+        _data_metric_line_html(
+            key,
+            _stat_display(player, key, fmt_pct_fn=fmt_pct_fn, fmt_stat_fn=fmt_stat_fn),
+            label_fn=label_fn,
+            tooltip_fn=tooltip_fn,
+        )
+        for key in keys
+    ]
+    if not lines:
+        return ""
+    return (
+        '<div class="pa-data-section">'
+        f'<div class="pa-data-section-title">{html.escape(title)}</div>'
+        f'<div class="pa-data-section-body">{"".join(lines)}</div>'
+        "</div>"
+    )
+
+
+def _build_spain_identity_card_html(
+    player: dict,
+    *,
+    origin_heatmap_b64: str | None = None,
+    fmt_pct_fn=pg_fmt_pct,
+) -> str:
+    profile_lines = []
+    for key in pp.GENERAL_PROFILE_KEYS:
+        if key == "minutes":
+            value = _general_profile_minutes_html(player, fmt_pct_fn=fmt_pct_fn)
+        else:
+            value = _general_profile_value_html(player, key, fmt_pct_fn=fmt_pct_fn)
+        profile_lines.append(
+            _general_profile_row_html(pp.GENERAL_PROFILE_LABELS[key], value)
+        )
+    profile_html = "".join(profile_lines)
+    heatmap_block = ""
+    if origin_heatmap_b64:
+        heatmap_block = (
+            '<div class="pa-origin-heatmap-wrap">'
+            f'<img class="pa-origin-heatmap" src="data:image/png;base64,{origin_heatmap_b64}" '
+            'alt="Origem de passes e conduções" />'
+            "</div>"
+        )
+    return (
+        '<div class="player-card pa-identity-card pa-data-identity">'
+        '<div class="pa-identity-top">'
+        '<div class="pa-identity-header">'
+        f'<div class="pa-identity-photo-wrap">{_player_photo_html(player)}</div>'
+        '<div class="pa-identity-head-text">'
+        f'<h2 class="pa-identity-title">{html.escape(str(player.get("player_name", "—")))}</h2>'
+        f'<p class="pa-identity-meta">{html.escape(str(player.get("team", "—")))} · '
+        f'{html.escape(str(player.get("position", "—")))}</p>'
+        "</div>"
+        "</div>"
+        "</div>"
+        '<div class="pa-identity-divider"></div>'
+        '<p class="pa-section-label">Perfil geral</p>'
+        f'<div class="pa-left-card-body">'
+        f'<div class="pa-participation-compact">{profile_html}</div>'
+        f"{heatmap_block}"
+        "</div>"
+        "</div>"
+    )
+
+
+def _build_spain_player_data_layout_html(
+    player: dict,
+    *,
+    origin_heatmap_b64: str | None = None,
+    scout_section_specs=PROGRESSION_SCOUT_SECTION_SPECS,
+    label_fn=pg_analyst_metric_label,
+    tooltip_fn=pg_metric_tooltip,
+    fmt_pct_fn=pg_fmt_pct,
+    fmt_stat_fn=pg_fmt_stat_value,
+) -> str:
+    identity = _build_spain_identity_card_html(
+        player,
+        origin_heatmap_b64=origin_heatmap_b64,
+        fmt_pct_fn=fmt_pct_fn,
+    )
+    participation = _data_metrics_section_html(
+        player,
+        "Volume na partida",
+        SPAIN_PARTICIPATION_KEYS,
+        label_fn=label_fn,
+        tooltip_fn=tooltip_fn,
+        fmt_pct_fn=fmt_pct_fn,
+        fmt_stat_fn=fmt_stat_fn,
+    )
+    pass_sections: list[str] = []
+    carry_sections: list[str] = []
+    for section_key, title, _subtitle, keys in scout_section_specs:
+        block = _data_metrics_section_html(
+            player,
+            title,
+            keys,
+            label_fn=label_fn,
+            tooltip_fn=tooltip_fn,
+            fmt_pct_fn=fmt_pct_fn,
+            fmt_stat_fn=fmt_stat_fn,
+        )
+        if not block:
+            continue
+        if str(section_key).startswith("pass_"):
+            pass_sections.append(block)
+        elif str(section_key).startswith("carry_"):
+            carry_sections.append(block)
+
+    pass_group = (
+        '<p class="pa-data-group-label">Passes · métricas xT</p>'
+        f'{"".join(pass_sections)}'
+        if pass_sections
+        else ""
+    )
+    carry_group = (
+        '<p class="pa-data-group-label">Conduções · métricas xT</p>'
+        f'{"".join(carry_sections)}'
+        if carry_sections
+        else ""
+    )
+    return (
+        '<div class="pa-data-layout">'
+        f"{identity}"
+        f"{participation}"
+        f"{pass_group}"
+        f"{carry_group}"
+        "</div>"
+    )
+
+
 def render_player_analysis_section(
     all_players: list[dict],
     carries_players: list[dict],
@@ -5095,8 +5328,8 @@ def render_player_analysis_section(
 ) -> None:
     st.subheader("Player Analysis")
     st.caption(
-        f"Comparação de xT, passes e conduções entre os três meio-campistas — {MATCH_LABEL}. "
-        "Ratings relativos ao grupo dos três jogadores."
+        f"Métricas de xT, passes e conduções dos meio-campistas da Espanha — {MATCH_LABEL}. "
+        "Valores absolutos e por 90 minutos, sem comparação entre jogadores."
     )
 
     if not all_players:
@@ -5138,18 +5371,14 @@ def render_player_analysis_section(
             )
             origin_heatmap_b64 = _fig_to_b64(fig_origin)
 
-        layout = _build_player_analysis_layout_html(
+        layout = _build_spain_player_data_layout_html(
             player,
-            scout_section_specs=PROGRESSION_SCOUT_SECTION_SPECS,
-            pillar_labels=_PROGRESSION_RADAR_METRIC_LABELS,
             origin_heatmap_b64=origin_heatmap_b64,
+            scout_section_specs=PROGRESSION_SCOUT_SECTION_SPECS,
             label_fn=pg_analyst_metric_label,
             tooltip_fn=pg_metric_tooltip,
-            rank_in_group_fn=pg_rank_in_group_label,
             fmt_pct_fn=pg_fmt_pct,
             fmt_stat_fn=pg_fmt_stat_value,
-            confidence_minutes=RATING_CONFIDENCE_MINUTES,
-            confidence_passes=RATING_CONFIDENCE_PASSES,
         )
         columns_html.append(f'<div class="pa-triple-col">{layout}</div>')
 
@@ -5519,7 +5748,7 @@ def render_presentation_tab(
         "<strong>expected threat (xT)</strong> — ações que aumentam a probabilidade de gol "
         "recebem scores mais altos.</p>"
         "<p>Na aba <strong>Player Analysis</strong>, Rodri, Fabián Ruiz e Dani Olmo "
-        "aparecem lado a lado com as mesmas métricas do app da Série B: ameaça no passe, "
+        "aparecem lado a lado com volume na partida, métricas de ameaça no passe, "
         "passes de risco, construção vs agressão, ameaça na condução e chegada à área.</p>"
         "</div>",
         unsafe_allow_html=True,
@@ -5539,7 +5768,7 @@ def render_presentation_tab(
                 "</tr>"
             )
         st.markdown(
-            '<div class="pres-card"><h4>Resumo rápido</h4>'
+            '<div class="pres-card"><h4>Resumo da partida</h4>'
             '<table class="rx" style="width:100%;border-collapse:collapse">'
             "<thead><tr><th>Jogador</th><th>Time</th><th>Min</th><th>Passes</th>"
             "<th>Thr Pass p90</th><th>Thr Carry p90</th></tr></thead>"
