@@ -1,0 +1,166 @@
+category,eventActionType,isHome,outcome,keypass,isLongBall,start_x,start_y,end_x,end_y,player_id,player_name,position,event_id,home_team,away_team,match_date
+passes,pass,False,True,False,,41.3,57.2,38.7,72.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.8,18.8,19.8,62.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,8.0,87.2,19.1,82.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,19.8,74.6,7.1,54.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.7,67.1,38.9,86.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,59.5,71.9,63.3,52.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,57.6,47.2,54.9,65.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,39.8,72.0,41.3,81.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,30.0,66.5,33.0,74.4,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,34.4,75.2,34.7,64.1,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,73.5,80.4,57.8,67.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,55.3,73.1,44.9,40.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,45.3,48.4,39.0,68.4,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,40.2,53.6,40.9,68.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,68.9,29.6,61.8,63.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,33.2,59.1,27.4,63.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,14.9,74.0,36.3,91.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,26.3,6.1,21.7,2.9,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,53.1,40.6,57.4,6.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,57.3,24.5,64.1,33.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,56.7,74.7,43.5,78.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,64.8,93.5,54.2,77.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,39.7,28.7,46.6,35.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,28.9,34.8,33.3,37.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,76.9,61.5,78.6,40.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,29.0,63.3,66.3,90.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,35.9,63.9,43.5,39.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.1,57.9,58.5,73.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,44.0,88.7,37.8,80.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.6,67.2,47.6,55.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.7,72.6,46.4,77.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,30.0,57.3,27.1,34.4,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,37.3,63.8,32.5,27.1,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,57.5,5.6,56.4,19.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,48.8,7.0,48.5,24.4,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,26.4,15.8,17.8,8.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,35.1,9.1,23.3,28.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,32.8,70.2,65.1,100.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,45.9,66.8,53.3,69.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,52.1,26.2,40.0,59.1,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,33.5,57.9,39.7,92.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.5,31.3,54.2,8.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,43.0,13.6,33.2,43.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,20.4,77.0,6.8,61.4,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,51.7,52.8,54.5,88.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,54.7,39.1,67.8,73.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,20.6,68.7,25.7,42.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,26.2,39.2,31.6,41.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,73.8,61.7,90.4,35.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,72.4,57.3,73.2,51.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,44.4,67.7,35.3,73.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,34.5,69.9,29.8,75.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,64.2,95.3,44.3,77.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,39.4,73.1,34.4,67.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,42.3,86.3,45.6,87.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,62.3,75.2,60.3,66.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,40.2,38.8,46.2,11.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,44.3,68.6,30.3,45.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,54.4,28.3,64.4,24.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,61.2,44.3,61.5,89.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,33.6,59.4,43.8,54.6,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,33.1,21.8,73.9,16.3,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,62.6,82.4,58.7,64.8,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,28.5,13.1,54.7,67.7,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,52.4,52.1,46.0,58.2,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,53.9,27.2,55.7,6.5,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,41.4,66.2,52.1,50.0,827606,Rodri,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.5,68.9,29.4,36.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,58.8,78.5,57.2,91.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,41.5,5.5,38.7,2.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,19.7,82.2,19.4,93.6,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.8,61.1,53.1,37.6,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,58.5,35.2,65.2,35.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,63.5,52.2,68.8,51.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,67.7,47.6,69.5,9.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,53.9,32.9,53.0,42.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,41.3,74.9,46.2,81.6,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,34.6,63.0,31.0,33.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,45.1,44.8,57.6,24.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,cross,False,False,False,,95.1,89.6,95.8,82.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,23.0,73.4,26.8,94.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,47.2,65.1,43.9,48.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,57.2,75.0,39.8,77.4,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,70.5,81.5,67.3,57.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,67.5,51.8,68.3,26.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,67.7,52.5,92.1,93.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,37.7,69.5,29.9,64.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,56.8,78.2,67.0,96.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,66.3,92.6,100.0,76.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,23.4,91.4,26.6,91.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,55.0,5.8,46.8,2.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,55.7,37.0,38.9,54.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,True,,70.6,74.3,72.9,77.3,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.6,35.2,47.1,48.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,36.9,17.6,77.8,34.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,45.9,68.4,57.3,85.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,73.5,66.6,70.4,51.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,True,,71.9,52.2,70.4,31.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,cross,False,True,False,,89.7,85.4,89.8,3.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,42.1,36.5,53.8,53.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,58.0,73.4,39.7,79.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,38.7,64.4,34.1,76.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,48.7,58.5,78.1,26.6,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.6,78.3,32.5,89.6,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.5,70.7,43.9,49.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,30.4,51.6,29.8,57.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,35.2,36.4,32.5,66.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,38.8,47.8,37.5,63.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.9,26.0,35.7,31.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,31.9,65.3,38.2,75.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,54.0,69.5,59.6,72.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,35.2,55.8,33.5,57.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,61.8,28.7,59.9,14.3,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,55.3,25.0,38.3,24.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,43.2,21.1,17.4,44.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,40.2,57.5,45.2,86.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,30.8,93.0,31.6,96.3,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,72.6,74.3,100.0,33.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,21.5,34.9,22.6,5.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,72.5,47.9,73.6,18.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,60.8,81.9,68.1,77.3,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,63.2,72.6,94.7,66.5,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,51.7,77.7,45.2,68.4,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,45.3,67.4,37.3,35.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,38.0,73.4,34.5,69.9,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.4,67.5,58.9,7.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,42.4,70.4,42.3,86.3,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,43.0,94.7,72.9,98.0,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,69.5,96.2,63.5,77.7,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,27.8,54.8,41.8,25.1,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.0,72.3,63.1,96.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,62.0,87.2,65.8,96.2,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,55.8,89.1,41.1,74.4,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,41.0,75.6,32.5,79.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,53.3,77.4,46.5,70.8,784655,Fabián Ruiz,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,32.7,31.4,27.6,42.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,36.5,65.6,34.4,88.1,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,38.6,86.6,35.3,63.6,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,48.3,54.2,46.2,33.4,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,56.3,62.3,49.1,71.1,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,77.4,16.1,80.1,7.6,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,43.4,49.3,53.2,33.5,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,9.7,4.7,32.5,2.3,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,54.8,65.0,33.6,60.0,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,42.0,32.3,38.3,63.8,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,46.5,66.5,54.5,88.8,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,84.1,85.4,96.4,73.1,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,93.6,96.8,88.1,98.1,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,34.4,50.9,40.4,60.6,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,80.8,43.0,90.6,36.1,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,53.8,53.1,36.8,63.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,39.0,5.9,34.2,9.5,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,57.5,11.0,57.9,5.5,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,39.9,31.6,54.2,42.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,52.9,29.2,57.6,17.0,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,True,,72.4,63.0,80.3,78.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,True,,78.8,38.5,83.2,33.6,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,56.7,76.1,54.7,93.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,65.9,89.7,75.7,96.8,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,70.3,88.5,67.1,96.8,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,62.7,60.6,66.6,40.6,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,62.9,40.4,63.2,19.7,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,29.7,48.1,27.8,54.0,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,False,False,,69.4,35.3,74.9,33.7,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
+passes,pass,False,True,False,,41.3,28.7,42.8,66.2,789071,Dani Olmo,M,12813008,France,Spain,2026-07-14T19:00:00+00:00
