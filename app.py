@@ -5157,6 +5157,99 @@ SPAIN_PARTICIPATION_KEYS: tuple[str, ...] = (
     "passes_to_box",
 )
 
+SPAIN_MATCH_SCOUT_SECTION_SPECS: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
+    ("pass_metrics_absolute", "Ameaça no passe", "", ("impact_passes", "impact_per_pass")),
+    ("pass_risk_pass", "Passes de risco", "", ("risk_passes", "risk_pass_pct", "positive_dxt_pct")),
+    ("pass_pass_types", "Tipos de passe", "", ("construction_aip", "aggression_aip")),
+    ("pass_distance", "Distância", "", ("dist_short_impact", "dist_medium_impact", "dist_long_impact")),
+    ("carry_metrics_absolute", "Ameaça na condução", "", ("carry_impact_passes", "carry_dxt_per_pass")),
+    ("carry_risk_carry", "Conduções de risco", "", ("carry_threat_carry_pct", "carry_positive_dxt_pct")),
+    (
+        "carry_general_carries_dribbles",
+        "Terço final",
+        "",
+        ("carries_impact_to_box", "dribbles_final_third"),
+    ),
+)
+
+SPAIN_MATCH_LABELS: dict[str, str] = {
+    "minutes": "Minutos",
+    "passes_completed": "Passes completados",
+    "passes_total": "Passes tentados",
+    "carries_total": "Conduções",
+    "impact_passes": "Passes com ameaça",
+    "high_impact_passes": "Passes de alta ameaça",
+    "carry_impact_passes": "Conduções com ameaça",
+    "carry_high_impact_passes": "Conduções de alta ameaça",
+    "dribbles_total": "Dribles",
+    "key_passes": "Passes-chave",
+    "progressive_passes": "Passes progressivos",
+    "passes_to_box": "Passes para a área",
+    "impact_per_pass": "Ameaça média por passe",
+    "risk_passes": "Passes de risco",
+    "risk_pass_pct": "% passes de risco",
+    "positive_dxt_pct": "% passes com ΔxT positivo",
+    "construction_aip": "Construção com ameaça",
+    "aggression_aip": "Agressão com ameaça",
+    "dist_short_impact": "Ameaça < 12 m",
+    "dist_medium_impact": "Ameaça 12–25 m",
+    "dist_long_impact": "Ameaça ≥ 25 m",
+    "carry_dxt_per_pass": "Ameaça média por condução",
+    "carry_threat_carry_pct": "% conduções com ameaça",
+    "carry_positive_dxt_pct": "% conduções com ΔxT positivo",
+    "carries_impact_to_box": "Entradas na área com ameaça",
+    "dribbles_final_third": "Dribles no terço final",
+}
+
+SPAIN_MATCH_TOOLTIPS: dict[str, str] = {
+    "impact_passes": "Passes classificados como ameaça pelo modelo xT nesta partida.",
+    "impact_per_pass": "ΔxT médio nos passes com ameaça.",
+    "risk_passes": "Passes com ΔxT ≥ 0.25 nesta partida.",
+    "risk_pass_pct": "Percentual de passes de risco sobre o total de passes.",
+    "positive_dxt_pct": "Percentual de passes com ΔxT positivo.",
+    "construction_aip": "Passes de construção (primeiros 80% do campo) que geraram ameaça.",
+    "aggression_aip": "Passes ofensivos (últimos 20% do campo) que geraram ameaça.",
+    "dist_short_impact": "Passes com ameaça completados com menos de 12 m.",
+    "dist_medium_impact": "Passes com ameaça completados entre 12 m e 25 m.",
+    "dist_long_impact": "Passes com ameaça completados com 25 m ou mais.",
+    "carry_impact_passes": "Conduções classificadas como ameaça nesta partida.",
+    "carry_dxt_per_pass": "ΔxT médio nas conduções com ameaça.",
+    "carry_threat_carry_pct": "Percentual de conduções classificadas como ameaça.",
+    "carry_positive_dxt_pct": "Percentual de conduções com ΔxT positivo.",
+    "carries_impact_to_box": "Entradas na área classificadas como condução com ameaça.",
+    "dribbles_final_third": "Dribles bem-sucedidos iniciados no terço final.",
+}
+
+
+def _spain_analyst_metric_label(key: str) -> str:
+    return SPAIN_MATCH_LABELS.get(key, pg_analyst_metric_label(key))
+
+
+def _spain_metric_tooltip(key: str) -> str:
+    return SPAIN_MATCH_TOOLTIPS.get(key, pg_metric_tooltip(key))
+
+
+def _spain_fmt_stat_value(key: str, value) -> str:
+    if value is None:
+        return "—"
+    if key == "carries_impact_to_box":
+        return ce.fmt_stat_value("carries_impact_to_box", value)
+    if key.startswith("carry_"):
+        return pg_fmt_stat_value(key, value)
+    return pe.fmt_stat_value(key, value)
+
+
+def _enrich_spain_match_metrics(player: dict, carry_by_id: dict[str, dict]) -> dict:
+    """Expose carry match totals that are not always present on the merged profile."""
+    enriched = dict(player)
+    carry = carry_by_id.get(str(player.get("player_id", "")))
+    if not carry:
+        return enriched
+    for src in ("carries_impact_to_box", "carries_to_box", "dribbles_final_third"):
+        if src in carry and enriched.get(src) is None:
+            enriched[src] = carry[src]
+    return enriched
+
 
 def _data_metric_line_html(
     key: str,
@@ -5179,10 +5272,10 @@ def _data_metrics_section_html(
     title: str,
     keys: tuple[str, ...],
     *,
-    label_fn=pg_analyst_metric_label,
-    tooltip_fn=pg_metric_tooltip,
+    label_fn=_spain_analyst_metric_label,
+    tooltip_fn=_spain_metric_tooltip,
     fmt_pct_fn=pg_fmt_pct,
-    fmt_stat_fn=pg_fmt_stat_value,
+    fmt_stat_fn=_spain_fmt_stat_value,
 ) -> str:
     lines = [
         _data_metric_line_html(
@@ -5253,11 +5346,11 @@ def _build_spain_player_data_layout_html(
     player: dict,
     *,
     origin_heatmap_b64: str | None = None,
-    scout_section_specs=PROGRESSION_SCOUT_SECTION_SPECS,
-    label_fn=pg_analyst_metric_label,
-    tooltip_fn=pg_metric_tooltip,
+    scout_section_specs=SPAIN_MATCH_SCOUT_SECTION_SPECS,
+    label_fn=_spain_analyst_metric_label,
+    tooltip_fn=_spain_metric_tooltip,
     fmt_pct_fn=pg_fmt_pct,
-    fmt_stat_fn=pg_fmt_stat_value,
+    fmt_stat_fn=_spain_fmt_stat_value,
 ) -> str:
     identity = _build_spain_identity_card_html(
         player,
@@ -5329,7 +5422,7 @@ def render_player_analysis_section(
     st.subheader("Player Analysis")
     st.caption(
         f"Métricas de xT, passes e conduções dos meio-campistas da Espanha — {MATCH_LABEL}. "
-        "Valores absolutos e por 90 minutos, sem comparação entre jogadores."
+        "Todos os valores referem-se a esta partida."
     )
 
     if not all_players:
@@ -5355,6 +5448,7 @@ def render_player_analysis_section(
             continue
 
         player = pp.enrich_player_general_profile(player)
+        player = _enrich_spain_match_metrics(player, carry_by_id)
         origin_heatmap_b64: str | None = None
         passes_df = passes_by_player.get(player_id)
         carries_df = carries_by_player.get(player_id)
@@ -5374,11 +5468,6 @@ def render_player_analysis_section(
         layout = _build_spain_player_data_layout_html(
             player,
             origin_heatmap_b64=origin_heatmap_b64,
-            scout_section_specs=PROGRESSION_SCOUT_SECTION_SPECS,
-            label_fn=pg_analyst_metric_label,
-            tooltip_fn=pg_metric_tooltip,
-            fmt_pct_fn=pg_fmt_pct,
-            fmt_stat_fn=pg_fmt_stat_value,
         )
         columns_html.append(f'<div class="pa-triple-col">{layout}</div>')
 
@@ -5736,6 +5825,7 @@ def render_presentation_tab(
     passes_by_player: dict,
     players_by_id: dict[str, dict],
     pool_by_position: dict[str, list[dict]],
+    progression_by_id: dict[str, dict],
     *,
     rated: list[dict],
 ) -> None:
@@ -5757,21 +5847,21 @@ def render_presentation_tab(
     if all_players:
         rows = []
         for pid, name in TARGET_PLAYER_ORDER:
-            p = players_by_id.get(pid, {})
+            p = progression_by_id.get(pid) or players_by_id.get(pid, {})
             rows.append(
                 f"<tr><td>{html.escape(name)}</td>"
                 f"<td>{html.escape(str(p.get('team', 'Spain')))}</td>"
                 f"<td>{html.escape(fmt_stat_value('minutes', p.get('minutes')))}</td>"
                 f"<td>{html.escape(fmt_stat_value('passes_completed', p.get('passes_completed')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('impact_passes_p90', p.get('impact_passes_p90')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('carry_impact_passes_p90', p.get('carry_impact_passes_p90')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('impact_passes', p.get('impact_passes')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('carry_impact_passes', p.get('carry_impact_passes')))}</td>"
                 "</tr>"
             )
         st.markdown(
             '<div class="pres-card"><h4>Resumo da partida</h4>'
             '<table class="rx" style="width:100%;border-collapse:collapse">'
             "<thead><tr><th>Jogador</th><th>Time</th><th>Min</th><th>Passes</th>"
-            "<th>Thr Pass p90</th><th>Thr Carry p90</th></tr></thead>"
+            "<th>Passes c/ ameaça</th><th>Conduções c/ ameaça</th></tr></thead>"
             f"<tbody>{''.join(rows)}</tbody></table></div>",
             unsafe_allow_html=True,
         )
@@ -6174,7 +6264,8 @@ def main() -> None:
     tab_pres, tab_analysis = st.tabs(["Overview", "Player Analysis"])
     with tab_pres:
         render_presentation_tab(
-            all_players, passes_by_player, players_by_id, pool_by_position, rated=rated,
+            all_players, passes_by_player, players_by_id, pool_by_position,
+            progression_by_id, rated=rated,
         )
     with tab_analysis:
         render_player_analysis_section(
