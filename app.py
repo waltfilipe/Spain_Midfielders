@@ -5159,11 +5159,16 @@ SPAIN_PARTICIPATION_KEYS: tuple[str, ...] = (
 
 SPAIN_MATCH_SCOUT_SECTION_SPECS: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
     ("pass_metrics_absolute", "Ameaça no passe", "", ("impact_passes", "impact_per_pass")),
-    ("pass_risk_pass", "Passes de risco", "", ("risk_passes", "risk_pass_pct", "positive_dxt_pct")),
+    ("pass_risk_pass", "Passes de risco", "", ("risk_passes", "risk_pass_pct", "positive_dxt", "positive_dxt_pct")),
     ("pass_pass_types", "Tipos de passe", "", ("construction_aip", "aggression_aip")),
     ("pass_distance", "Distância", "", ("dist_short_impact", "dist_medium_impact", "dist_long_impact")),
     ("carry_metrics_absolute", "Ameaça na condução", "", ("carry_impact_passes", "carry_dxt_per_pass")),
-    ("carry_risk_carry", "Conduções de risco", "", ("carry_threat_carry_pct", "carry_positive_dxt_pct")),
+    (
+        "carry_risk_carry",
+        "Conduções de risco",
+        "",
+        ("carry_threat_carry_pct", "carry_positive_dxt", "carry_positive_dxt_pct"),
+    ),
     (
         "carry_general_carries_dribbles",
         "Terço final",
@@ -5188,15 +5193,17 @@ SPAIN_MATCH_LABELS: dict[str, str] = {
     "impact_per_pass": "Ameaça média por passe",
     "risk_passes": "Passes de risco",
     "risk_pass_pct": "% passes de risco",
-    "positive_dxt_pct": "% passes com ΔxT positivo",
+    "positive_dxt": "Passes com ΔxT > 0",
+    "positive_dxt_pct": "% passes com ΔxT > 0",
     "construction_aip": "Construção com ameaça",
     "aggression_aip": "Agressão com ameaça",
     "dist_short_impact": "Ameaça < 12 m",
     "dist_medium_impact": "Ameaça 12–25 m",
     "dist_long_impact": "Ameaça ≥ 25 m",
     "carry_dxt_per_pass": "Ameaça média por condução",
-    "carry_threat_carry_pct": "% conduções com ameaça",
-    "carry_positive_dxt_pct": "% conduções com ΔxT positivo",
+    "carry_threat_carry_pct": "% conduções com ameaça (xT)",
+    "carry_positive_dxt": "Conduções com ΔxT > 0",
+    "carry_positive_dxt_pct": "% conduções com ΔxT > 0",
     "carries_impact_to_box": "Entradas na área com ameaça",
     "dribbles_final_third": "Dribles no terço final",
 }
@@ -5205,8 +5212,9 @@ SPAIN_MATCH_TOOLTIPS: dict[str, str] = {
     "impact_passes": "Passes classificados como ameaça pelo modelo xT nesta partida.",
     "impact_per_pass": "ΔxT médio nos passes com ameaça.",
     "risk_passes": "Passes com ΔxT ≥ 0.25 nesta partida.",
-    "risk_pass_pct": "Percentual de passes de risco sobre o total de passes.",
-    "positive_dxt_pct": "Percentual de passes com ΔxT positivo.",
+    "risk_pass_pct": "Percentual de passes com ΔxT ≥ 0,25 sobre o total de passes da partida.",
+    "positive_dxt": "Passes da partida em que o ΔxT foi maior que zero.",
+    "positive_dxt_pct": "Percentual de passes da partida com ΔxT maior que zero.",
     "construction_aip": "Passes de construção (primeiros 80% do campo) que geraram ameaça.",
     "aggression_aip": "Passes ofensivos (últimos 20% do campo) que geraram ameaça.",
     "dist_short_impact": "Passes com ameaça completados com menos de 12 m.",
@@ -5214,8 +5222,9 @@ SPAIN_MATCH_TOOLTIPS: dict[str, str] = {
     "dist_long_impact": "Passes com ameaça completados com 25 m ou mais.",
     "carry_impact_passes": "Conduções classificadas como ameaça nesta partida.",
     "carry_dxt_per_pass": "ΔxT médio nas conduções com ameaça.",
-    "carry_threat_carry_pct": "Percentual de conduções classificadas como ameaça.",
-    "carry_positive_dxt_pct": "Percentual de conduções com ΔxT positivo.",
+    "carry_threat_carry_pct": "Percentual de conduções classificadas como ameaça pelo modelo xT.",
+    "carry_positive_dxt": "Conduções da partida em que o ΔxT foi maior que zero.",
+    "carry_positive_dxt_pct": "Percentual de conduções da partida com ΔxT maior que zero.",
     "carries_impact_to_box": "Entradas na área classificadas como condução com ameaça.",
     "dribbles_final_third": "Dribles bem-sucedidos iniciados no terço final.",
 }
@@ -5239,16 +5248,77 @@ def _spain_fmt_stat_value(key: str, value) -> str:
     return pe.fmt_stat_value(key, value)
 
 
-def _enrich_spain_match_metrics(player: dict, carry_by_id: dict[str, dict]) -> dict:
-    """Expose carry match totals that are not always present on the merged profile."""
-    enriched = dict(player)
-    carry = carry_by_id.get(str(player.get("player_id", "")))
-    if not carry:
-        return enriched
-    for src in ("carries_impact_to_box", "carries_to_box", "dribbles_final_third"):
-        if src in carry and enriched.get(src) is None:
-            enriched[src] = carry[src]
-    return enriched
+def _match_positive_dxt_stats(frame) -> tuple[int, float]:
+  """Count and share of in-match actions with strictly positive ΔxT."""
+  if frame is None or getattr(frame, "empty", True):
+    return 0, 0.0
+  total = len(frame)
+  if total <= 0:
+    return 0, 0.0
+  count = int((frame["delta_xt_v4"] > 0).sum())
+  return count, round(count / total * 100.0, 1)
+
+
+SPAIN_RAW_PASS_KEYS: tuple[str, ...] = (
+    "minutes",
+    "passes_completed",
+    "passes_total",
+    "impact_passes",
+    "high_impact_passes",
+    "key_passes",
+    "progressive_passes",
+    "passes_to_box",
+    "risk_passes",
+    "risk_pass_pct",
+    "construction_aip",
+    "aggression_aip",
+    "dist_short_impact",
+    "dist_medium_impact",
+    "dist_long_impact",
+    "impact_per_pass",
+)
+
+SPAIN_CARRY_FIELD_MAP: dict[str, str] = {
+    "carries_total": "carries_total",
+    "carry_impact_passes": "impact_passes",
+    "carry_high_impact_passes": "high_impact_passes",
+    "dribbles_total": "dribbles_total",
+    "carry_dxt_per_pass": "dxt_per_pass",
+    "carry_threat_carry_pct": "threat_carry_pct",
+    "carries_impact_to_box": "carries_impact_to_box",
+    "dribbles_final_third": "dribbles_final_third",
+}
+
+
+def _build_spain_match_display_player(
+    player: dict,
+    *,
+    pass_player: dict | None,
+    carry_player: dict | None,
+    passes_df,
+    carries_df,
+) -> dict:
+    """Use raw per-match engine totals — never progression p90 enrichments."""
+    display = dict(player)
+    if pass_player:
+        for key in SPAIN_RAW_PASS_KEYS:
+            if key in pass_player:
+                display[key] = pass_player[key]
+    if carry_player:
+        for dest, src in SPAIN_CARRY_FIELD_MAP.items():
+            if src in carry_player:
+                display[dest] = carry_player[src]
+        if display.get("carries_total") is None:
+            display["carries_total"] = (
+                carry_player.get("carries_total") or carry_player.get("passes_completed")
+            )
+    pos_count, pos_pct = _match_positive_dxt_stats(passes_df)
+    carry_count, carry_pct = _match_positive_dxt_stats(carries_df)
+    display["positive_dxt"] = pos_count
+    display["positive_dxt_pct"] = pos_pct
+    display["carry_positive_dxt"] = carry_count
+    display["carry_positive_dxt_pct"] = carry_pct
+    return display
 
 
 def _data_metric_line_html(
@@ -5448,10 +5518,16 @@ def render_player_analysis_section(
             continue
 
         player = pp.enrich_player_general_profile(player)
-        player = _enrich_spain_match_metrics(player, carry_by_id)
-        origin_heatmap_b64: str | None = None
         passes_df = passes_by_player.get(player_id)
         carries_df = carries_by_player.get(player_id)
+        player = _build_spain_match_display_player(
+            player,
+            pass_player=pass_by_id.get(player_id),
+            carry_player=carry_by_id.get(player_id),
+            passes_df=passes_df,
+            carries_df=carries_df,
+        )
+        origin_heatmap_b64: str | None = None
         has_actions = (
             (passes_df is not None and not passes_df.empty)
             or (carries_df is not None and not carries_df.empty)
@@ -5823,9 +5899,11 @@ def _render_pres_flow_steps() -> None:
 def render_presentation_tab(
     all_players: list[dict],
     passes_by_player: dict,
+    carries_by_player: dict,
     players_by_id: dict[str, dict],
     pool_by_position: dict[str, list[dict]],
-    progression_by_id: dict[str, dict],
+    pass_by_id: dict[str, dict],
+    carry_by_id: dict[str, dict],
     *,
     rated: list[dict],
 ) -> None:
@@ -5847,14 +5925,15 @@ def render_presentation_tab(
     if all_players:
         rows = []
         for pid, name in TARGET_PLAYER_ORDER:
-            p = progression_by_id.get(pid) or players_by_id.get(pid, {})
+            pass_player = pass_by_id.get(pid, {})
+            carry_player = carry_by_id.get(pid, {})
             rows.append(
                 f"<tr><td>{html.escape(name)}</td>"
-                f"<td>{html.escape(str(p.get('team', 'Spain')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('minutes', p.get('minutes')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('passes_completed', p.get('passes_completed')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('impact_passes', p.get('impact_passes')))}</td>"
-                f"<td>{html.escape(fmt_stat_value('carry_impact_passes', p.get('carry_impact_passes')))}</td>"
+                f"<td>{html.escape(str(pass_player.get('team', 'Spain')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('minutes', pass_player.get('minutes')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('passes_completed', pass_player.get('passes_completed')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('impact_passes', pass_player.get('impact_passes')))}</td>"
+                f"<td>{html.escape(fmt_stat_value('impact_passes', carry_player.get('impact_passes')))}</td>"
                 "</tr>"
             )
         st.markdown(
@@ -6264,8 +6343,14 @@ def main() -> None:
     tab_pres, tab_analysis = st.tabs(["Overview", "Player Analysis"])
     with tab_pres:
         render_presentation_tab(
-            all_players, passes_by_player, players_by_id, pool_by_position,
-            progression_by_id, rated=rated,
+            all_players,
+            passes_by_player,
+            carries_by_player,
+            players_by_id,
+            pool_by_position,
+            players_by_id,
+            carries_by_id,
+            rated=rated,
         )
     with tab_analysis:
         render_player_analysis_section(
