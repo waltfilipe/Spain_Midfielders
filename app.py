@@ -5148,33 +5148,15 @@ SPAIN_PARTICIPATION_KEYS: tuple[str, ...] = (
     "passes_total",
     "carries_total",
     "impact_passes",
-    "high_impact_passes",
     "carry_impact_passes",
-    "carry_high_impact_passes",
-    "dribbles_total",
     "key_passes",
     "progressive_passes",
     "passes_to_box",
 )
 
 SPAIN_MATCH_SCOUT_SECTION_SPECS: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
-    ("pass_metrics_absolute", "Ameaça no passe", "", ("impact_passes", "impact_per_pass")),
-    ("pass_risk_pass", "Passes de risco", "", ("risk_passes", "risk_pass_pct", "positive_dxt", "positive_dxt_pct")),
-    ("pass_pass_types", "Tipos de passe", "", ("construction_aip", "aggression_aip")),
-    ("pass_distance", "Distância", "", ("dist_short_impact", "dist_medium_impact", "dist_long_impact")),
+    ("pass_metrics_absolute", "Ameaça no passe", "", ("impact_passes",)),
     ("carry_metrics_absolute", "Ameaça na condução", "", ("carry_impact_passes", "carry_dxt_per_pass")),
-    (
-        "carry_risk_carry",
-        "Conduções de risco",
-        "",
-        ("carry_threat_carry_pct", "carry_positive_dxt", "carry_positive_dxt_pct"),
-    ),
-    (
-        "carry_general_carries_dribbles",
-        "Terço final",
-        "",
-        ("carries_impact_to_box", "dribbles_final_third"),
-    ),
 )
 
 SPAIN_MATCH_LABELS: dict[str, str] = {
@@ -5183,50 +5165,17 @@ SPAIN_MATCH_LABELS: dict[str, str] = {
     "passes_total": "Passes tentados",
     "carries_total": "Conduções",
     "impact_passes": "Passes com ameaça",
-    "high_impact_passes": "Passes de alta ameaça",
     "carry_impact_passes": "Conduções com ameaça",
-    "carry_high_impact_passes": "Conduções de alta ameaça",
-    "dribbles_total": "Dribles",
     "key_passes": "Passes-chave",
     "progressive_passes": "Passes progressivos",
     "passes_to_box": "Passes para a área",
-    "impact_per_pass": "Ameaça média por passe",
-    "risk_passes": "Passes de risco",
-    "risk_pass_pct": "% passes de risco",
-    "positive_dxt": "Passes com ΔxT > 0",
-    "positive_dxt_pct": "% passes com ΔxT > 0",
-    "construction_aip": "Construção com ameaça",
-    "aggression_aip": "Agressão com ameaça",
-    "dist_short_impact": "Ameaça < 12 m",
-    "dist_medium_impact": "Ameaça 12–25 m",
-    "dist_long_impact": "Ameaça ≥ 25 m",
     "carry_dxt_per_pass": "Ameaça média por condução",
-    "carry_threat_carry_pct": "% conduções com ameaça (xT)",
-    "carry_positive_dxt": "Conduções com ΔxT > 0",
-    "carry_positive_dxt_pct": "% conduções com ΔxT > 0",
-    "carries_impact_to_box": "Entradas na área com ameaça",
-    "dribbles_final_third": "Dribles no terço final",
 }
 
 SPAIN_MATCH_TOOLTIPS: dict[str, str] = {
     "impact_passes": "Passes classificados como ameaça pelo modelo xT nesta partida.",
-    "impact_per_pass": "ΔxT médio nos passes com ameaça.",
-    "risk_passes": "Passes com ΔxT ≥ 0.25 nesta partida.",
-    "risk_pass_pct": "Percentual de passes com ΔxT ≥ 0,25 sobre o total de passes da partida.",
-    "positive_dxt": "Passes da partida em que o ΔxT foi maior que zero.",
-    "positive_dxt_pct": "Percentual de passes da partida com ΔxT maior que zero.",
-    "construction_aip": "Passes de construção (primeiros 80% do campo) que geraram ameaça.",
-    "aggression_aip": "Passes ofensivos (últimos 20% do campo) que geraram ameaça.",
-    "dist_short_impact": "Passes com ameaça completados com menos de 12 m.",
-    "dist_medium_impact": "Passes com ameaça completados entre 12 m e 25 m.",
-    "dist_long_impact": "Passes com ameaça completados com 25 m ou mais.",
     "carry_impact_passes": "Conduções classificadas como ameaça nesta partida.",
     "carry_dxt_per_pass": "ΔxT médio nas conduções com ameaça.",
-    "carry_threat_carry_pct": "Percentual de conduções classificadas como ameaça pelo modelo xT.",
-    "carry_positive_dxt": "Conduções da partida em que o ΔxT foi maior que zero.",
-    "carry_positive_dxt_pct": "Percentual de conduções da partida com ΔxT maior que zero.",
-    "carries_impact_to_box": "Entradas na área classificadas como condução com ameaça.",
-    "dribbles_final_third": "Dribles bem-sucedidos iniciados no terço final.",
 }
 
 
@@ -5241,22 +5190,9 @@ def _spain_metric_tooltip(key: str) -> str:
 def _spain_fmt_stat_value(key: str, value) -> str:
     if value is None:
         return "—"
-    if key == "carries_impact_to_box":
-        return ce.fmt_stat_value("carries_impact_to_box", value)
     if key.startswith("carry_"):
         return pg_fmt_stat_value(key, value)
     return pe.fmt_stat_value(key, value)
-
-
-def _match_positive_dxt_stats(frame) -> tuple[int, float]:
-  """Count and share of in-match actions with strictly positive ΔxT."""
-  if frame is None or getattr(frame, "empty", True):
-    return 0, 0.0
-  total = len(frame)
-  if total <= 0:
-    return 0, 0.0
-  count = int((frame["delta_xt_v4"] > 0).sum())
-  return count, round(count / total * 100.0, 1)
 
 
 SPAIN_RAW_PASS_KEYS: tuple[str, ...] = (
@@ -5264,29 +5200,15 @@ SPAIN_RAW_PASS_KEYS: tuple[str, ...] = (
     "passes_completed",
     "passes_total",
     "impact_passes",
-    "high_impact_passes",
     "key_passes",
     "progressive_passes",
     "passes_to_box",
-    "risk_passes",
-    "risk_pass_pct",
-    "construction_aip",
-    "aggression_aip",
-    "dist_short_impact",
-    "dist_medium_impact",
-    "dist_long_impact",
-    "impact_per_pass",
 )
 
 SPAIN_CARRY_FIELD_MAP: dict[str, str] = {
     "carries_total": "carries_total",
     "carry_impact_passes": "impact_passes",
-    "carry_high_impact_passes": "high_impact_passes",
-    "dribbles_total": "dribbles_total",
     "carry_dxt_per_pass": "dxt_per_pass",
-    "carry_threat_carry_pct": "threat_carry_pct",
-    "carries_impact_to_box": "carries_impact_to_box",
-    "dribbles_final_third": "dribbles_final_third",
 }
 
 
@@ -5295,8 +5217,6 @@ def _build_spain_match_display_player(
     *,
     pass_player: dict | None,
     carry_player: dict | None,
-    passes_df,
-    carries_df,
 ) -> dict:
     """Use raw per-match engine totals — never progression p90 enrichments."""
     display = dict(player)
@@ -5312,12 +5232,6 @@ def _build_spain_match_display_player(
             display["carries_total"] = (
                 carry_player.get("carries_total") or carry_player.get("passes_completed")
             )
-    pos_count, pos_pct = _match_positive_dxt_stats(passes_df)
-    carry_count, carry_pct = _match_positive_dxt_stats(carries_df)
-    display["positive_dxt"] = pos_count
-    display["positive_dxt_pct"] = pos_pct
-    display["carry_positive_dxt"] = carry_count
-    display["carry_positive_dxt_pct"] = carry_pct
     return display
 
 
@@ -5524,8 +5438,6 @@ def render_player_analysis_section(
             player,
             pass_player=pass_by_id.get(player_id),
             carry_player=carry_by_id.get(player_id),
-            passes_df=passes_df,
-            carries_df=carries_df,
         )
         origin_heatmap_b64: str | None = None
         has_actions = (
@@ -5916,8 +5828,8 @@ def render_presentation_tab(
         "<strong>expected threat (xT)</strong> — ações que aumentam a probabilidade de gol "
         "recebem scores mais altos.</p>"
         "<p>Na aba <strong>Player Analysis</strong>, Rodri, Fabián Ruiz e Dani Olmo "
-        "aparecem lado a lado com volume na partida, métricas de ameaça no passe, "
-        "passes de risco, construção vs agressão, ameaça na condução e chegada à área.</p>"
+        "aparecem lado a lado com volume na partida e métricas de ameaça no passe "
+        "e na condução.</p>"
         "</div>",
         unsafe_allow_html=True,
     )
